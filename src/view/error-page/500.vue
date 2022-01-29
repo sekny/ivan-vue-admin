@@ -1,5 +1,5 @@
 <template>
-  <error-content code="500" desc="Oh~~鬼知道服务器经历了什么~" :src="src"/>
+  <error-content code="500" desc="Oh~~Who the hell knows what's going on with the server~" :src="src"/>
 </template>
 
 <script>
