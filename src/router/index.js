@@ -7,9 +7,6 @@ import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
 import config from '@/config'
 const { homeName } = config
 
-console.log(store.state)
-console.log(routes)
-
 Vue.use(Router)
 const router = new Router({
   routes,

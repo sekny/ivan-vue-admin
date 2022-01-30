@@ -1,6 +1,7 @@
 <template>
   <div>
     <Card shadow>
+      <p slot="title">Test Form</p>
       <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
         <FormItem prop="user">
           <Input type="text" v-model="formInline.user" placeholder="Username">
@@ -19,17 +20,6 @@
           <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
         </FormItem>
       </Form>
-
-      <hr>
-      <Button>Default</Button>
-      <Button type="primary">Primary</Button>
-      <Button type="dashed">Dashed</Button>
-      <Button type="text">Text</Button>
-      <br><br>
-      <Button type="info">Info</Button>
-      <Button type="success">Success</Button>
-      <Button type="warning">Warning</Button>
-      <Button type="error">Error</Button>
     </Card>
   </div>
 </template>

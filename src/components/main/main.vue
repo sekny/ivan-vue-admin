@@ -2,7 +2,7 @@
   <Layout style="height: 100%" class="main">
     <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
       <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
-        <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
+        <!-- Content that needs to be placed on the menu, such as Logo，Written inside the side-menu tag, as follows -->
         <div class="logo-con">
           <img v-show="!collapsed" :src="maxLogo" key="max-logo" />
           <img v-show="collapsed" :src="minLogo" key="min-logo" />
@@ -13,7 +13,7 @@
       <Header class="header-con">
         <header-bar :collapsed="collapsed" @on-coll-change="handleCollapsedChange">
           <user :message-unread-count="unreadCount" :user-avatar="userAvatar"/>
-          <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
+          <!-- <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/> -->
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
@@ -163,7 +163,7 @@ export default {
   },
   mounted () {
     /**
-     * @description 初始化设置面包屑导航和标签导航
+     * @description Initialize breadcrumbs and tabs
      */
     this.setTagNavList()
     this.setHomeRoute(routers)
@@ -172,15 +172,15 @@ export default {
       route: { name, params, query, meta }
     })
     this.setBreadCrumb(this.$route)
-    // 设置初始语言
+    // Set initial language
     this.setLocal(this.$i18n.locale)
-    // 如果当前打开页面不在标签栏中，跳到homeName页
+    // If the currently open page is not in the tab bar, jump to the homeName page
     if (!this.tagNavList.find(item => item.name === this.$route.name)) {
       this.$router.push({
         name: this.$config.homeName
       })
     }
-    // 获取未读消息条数
+    // Get the number of unread messages
     this.getUnreadMessageCount()
   }
 }

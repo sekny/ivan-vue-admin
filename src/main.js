@@ -52,9 +52,9 @@ let vm = new Vue({
   render: h => h(App)
 })
 
-// Vue.mixin({
-//   methods: {
-//     capitalizeFirstLetter: str => str.charAt(0).toUpperCase() + str.slice(1),
-//     l: str => this.$i18n.messages[this.$i18n.locale][str]
-//   }
-// })
+Vue.mixin({
+  methods: {
+    capitalizeFirstLetter: str => str.charAt(0).toUpperCase() + str.slice(1),
+    l: str => this.$i18n.messages[this.$i18n.locale][str]
+  }
+})

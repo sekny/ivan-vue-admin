@@ -4,8 +4,8 @@
       <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
-      <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
+      <Input @on-change="handleClear" clearable placeholder="Enter a keyword to search" class="search-input" v-model="searchValue"/>
+      <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;search</Button>
     </div>
     <Table
       ref="tablesMain"
@@ -42,8 +42,8 @@
       <Select v-model="searchKey" class="search-col">
         <Option v-for="item in columns" v-if="item.key !== 'handle'" :value="item.key" :key="`search-col-${item.key}`">{{ item.title }}</Option>
       </Select>
-      <Input placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
-      <Button class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
+      <Input placeholder="Enter a keyword to search" class="search-input" v-model="searchValue"/>
+      <Button class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;search</Button>
     </div>
     <a id="hrefToExportTable" style="display: none;width: 0px;height: 0px;"></a>
   </div>
@@ -114,21 +114,21 @@ export default {
       default: false
     },
     /**
-     * @description 全局设置是否可编辑
+     * @description Whether global settings are editable
      */
     editable: {
       type: Boolean,
       default: false
     },
     /**
-     * @description 是否可搜索
+     * @description Is it searchable
      */
     searchable: {
       type: Boolean,
       default: false
     },
     /**
-     * @description 搜索控件所在位置，'top' / 'bottom'
+     * @description Search for the location of the control，'top' / 'bottom'
      */
     searchPlace: {
       type: String,

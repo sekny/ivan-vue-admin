@@ -5,8 +5,7 @@
 </p>
 
 <p>
-- Login with API
-- Spinner
+- CRUD
 - Route with permission
 - Form and Form-validation
 - Language Khmer
