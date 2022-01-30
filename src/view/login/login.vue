@@ -18,6 +18,7 @@
 <script>
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
+import { Spin } from 'iview'
 export default {
   components: {
     LoginForm
@@ -28,12 +29,21 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
+      Spin.show()
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName
           })
         })
+      }).catch(res => {
+        var errorMessage = 'Invalid username or password'
+        if (res.response && res.response.data && res.response.data.error) {
+          errorMessage = res.response.data.error
+        }
+        this.$Message.error(errorMessage)
+      }).finally(() => {
+        Spin.hide()
       })
     }
   }

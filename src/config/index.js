@@ -3,8 +3,10 @@ export default {
   cookieExpires: 1, // one day
   useI18n: true,
   baseUrl: {
-    dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
-    pro: 'https://produce.com'
+    // dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
+    // pro: 'https://produce.com'
+    dev: 'https://reqres.in/api/',
+    pro: 'https://reqres.in/api/'
   },
   homeName: 'home',
   plugin: {

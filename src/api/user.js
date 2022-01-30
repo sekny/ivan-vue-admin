@@ -5,6 +5,10 @@ export const login = ({ userName, password }) => {
     userName,
     password
   }
+  // const data = {
+  //   'email': userName,
+  //   'password': password
+  // }
   return axios.request({
     url: 'login',
     data,
