@@ -9,12 +9,12 @@ module.exports = {
     'generator-star-spacing': 'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'vue/no-parsing-error': [2, {
+    'vue/no-parsing-error': [4, {
       'x-invalid-end-tag': false
     }],
     'no-undef': 'off',
     'camelcase': 'off',
-    "quotes": [2, "single", { "avoidEscape": true }]
+    "quotes": [4, "single", { "avoidEscape": true }]
   },
   parserOptions: {
     parser: 'babel-eslint'

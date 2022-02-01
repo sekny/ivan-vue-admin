@@ -1,79 +1,329 @@
 <template>
   <div>
     <Card shadow>
-      <p slot="title">Test Form</p>
-      <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-        <FormItem prop="user">
-          <Input type="text" v-model="formInline.user" placeholder="Username">
-            <Icon type="ios-person-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem prop="password">
-          <Input
-            type="password"
-            v-model="formInline.password"
-            placeholder="Password">
-            <Icon type="ios-lock-outline" slot="prepend"></Icon>
-          </Input>
-        </FormItem>
-        <FormItem>
-          <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
-        </FormItem>
-      </Form>
+      <p slot="title">Service Module</p>
+      <Row>
+        <Col :xs="{ span: 24 }" :lg="{ span: 22 }">
+          <Input :on-click="searchevents"
+            :on-enter="searchevents"
+            search placeholder="Search..."
+            style="width: auto" />
+          <!-- <Input :on-enter="searchevents" suffix="ios-search" placeholder="" style="width: auto" /> -->
+        </Col>
+        <Col :xs="{ span: 24 }" :lg="{ span: 2 }" type="flex" justify="end">
+          <!-- <Select v-model="filter" style="width:200px" clearable>
+            <Option value="ACTIVE">Active</Option>
+              <Option value="INACTIVE">Inactive</Option>
+          </Select> -->
+          <Button long type="primary" @click="onCreate" icon="ios-add-circle-outline">Add</Button>
+        </Col>
+      </Row>
+      <Divider />
+      <Table :loading="loading" :columns="table.column" :data="table.data" :size="'small'"></Table>
     </Card>
+
+    <Modal v-model="showEditModal"
+        :closable="false"
+        :mask-closable="false"
+        :title="form.model.title">
+        <div>
+          <Form ref="form.formValidate" :rules="form.ruleValidate" :model="form.model" :label-width="100">
+            <FormItem label="Code" prop="code">
+                <Input :disabled="!form.model.isCreate" v-model="form.model.code" max-length="32" placeholder="Code"></Input>
+            </FormItem>
+            <FormItem label="Name" prop="name">
+                <Input v-model="form.model.name" placeholder="Title"></Input>
+            </FormItem>
+            <FormItem label="Description" prop="description">
+                <Input v-model="form.model.description" placeholder="Description"></Input>
+            </FormItem>
+            <FormItem label="Status" prop="status">
+                <Select v-model="form.model.status">
+                    <Option value="ACTIVE">Active</Option>
+                    <Option value="INACTIVE">Inactive</Option>
+                </Select>
+            </FormItem>
+          </Form>
+        </div>
+
+        <div slot="footer">
+            <Button type="text" @click="onCancel">Cancel</Button>
+            <Button type="primary" :loading="modal_loading" @click="onSave">Save</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 <script>
+import axios from '@/libs/api.request'
+import { Spin } from 'iview'
+import dayjs from 'dayjs'
 export default {
   name: 'configure',
   data () {
     return {
-      formInline: {
-        user: '',
-        password: ''
+      loading: false,
+      showEditModal: false,
+      modal_loading: false,
+      form: {
+        model: {},
+        formValidate: {
+          status: '',
+          code: '',
+          name: '',
+          description: ''
+        },
+        ruleValidate: {
+          code: [
+            { required: true, message: 'Code cannot be empty', trigger: 'blur' }
+          ],
+          name: [
+            { required: true, message: 'Name cannot be empty', trigger: 'blur' }
+          ],
+          status: [
+            { required: true, message: 'Status cannot be empty', trigger: 'blur' }
+          ]
+        }
       },
-      ruleInline: {
-        user: [
-          {
-            required: true,
-            message: 'Please fill in the user name',
-            trigger: 'blur'
-          }
-        ],
-        password: [
-          {
-            required: true,
-            message: 'Please fill in the password.',
-            trigger: 'blur'
-          },
-          {
-            type: 'string',
-            min: 6,
-            message: 'The password length cannot be less than 6 bits',
-            trigger: 'blur'
-          }
-        ]
-      }
+      table: {
+        column: [],
+        data: []
+      },
+      search: '',
+      filter: ''
     }
   },
   methods: {
-    handleSubmit (name) {
-      this.$refs[name].validate((valid) => {
-        if (valid) {
-          this.$Message.success('Success!')
+    searchevents: function () {
+      console.log('search event hit')
+      let result = this.table.data
+      if (!this.search) {
+        return result
+      }
+
+      const search = this.search.toLowerCase()
+
+      const filter = event => event.name.toLowerCase().includes(search) || event.state.toLowerCase().includes(search) || event.tags.some(tag => tag.toLowerCase().includes(search))
+
+      let filterData = result.filter(filter)
+      console.log(filterData)
+      return filterData
+    },
+    init () {
+      Spin.show()
+      this.loading = true
+      axios.request({
+        url: 'services/modules', // 'unknown',
+        method: 'get'
+      }).then(res => {
+        console.log(res)
+        var columns = [
+          {
+            type: 'index',
+            width: 60,
+            align: 'center'
+          },
+          {
+            title: 'Actions',
+            key: 'action',
+            render: (h, params) => {
+              return h('div', [
+                // h('Icon', {
+                //   props: {
+                //     type: 'ios-create-outline',
+                //     size: 24,
+                //     trigger: 'click',
+                //     color: '#2D8cF0'
+                //   },
+                //   on: {
+                //     click: () => {
+                //       this.edit(params.index)
+                //     }
+                //   }
+                // }),
+                // h('Icon', {
+                //   props: {
+                //     type: 'ios-trash-outline',
+                //     size: 24,
+                //     trigger: 'click',
+                //     color: '#ed4014'
+                //   },
+                //   on: {
+                //     click: () => {
+                //       this.onClickDelete(params.index)
+                //     }
+                //   }
+                // })
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    icon: 'ios-create-outline',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.edit(params.index)
+                    }
+                  }
+                }),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    icon: 'ios-trash-outline',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.onClickDelete(params.index)
+                    }
+                  }
+                })
+              ])
+            }
+          }
+        ]
+        Object.keys(res.data.data[0]).map((item) => {
+          var col = {
+            title: this.capitalizeFirstLetter(item),
+            key: item
+          }
+
+          if ((['created_at', 'modified_at']).includes(item)) {
+            col.render = (h, params) => {
+              const row = params.row
+              return h('div', row[item] ? dayjs(row[item]).format('DD-MMM-YYYY') : '')
+            }
+          } else if (item === 'status') {
+            // <Tag color="blue">blue</Tag>
+            col.render = (h, params) => {
+              const row = params.row
+              return h('Tag', {
+                props: {
+                  size: 'small',
+                  color: row[item] === 'ACTIVE' ? 'blue' : 'volcano'
+                }
+              }, row[item])
+            }
+            col.filters = [
+              {
+                label: 'Active',
+                value: 'ACTIVE'
+              },
+              {
+                label: 'Inactive',
+                value: 'INACTIVE'
+              }
+            ]
+            col.filterMultiple = false
+            col.filterMethod = (value, row) => {
+              // return row[item].indexOf(value) > -1
+              return row[item] === value
+            }
+          }
+
+          columns.push(col)
+          // return col
+        })
+        this.table.column = columns
+        this.table.data = res.data.data
+      }).catch(err => {
+        if (err && err.message) {
+          this.$Message.error(err.message)
+        }
+      }).finally(() => {
+        Spin.hide()
+        this.loading = false
+      })
+    },
+    edit (index) {
+      this.modal_loading = false
+      this.$refs['form.formValidate'].resetFields()
+      this.showEditModal = true
+      var item = this.table.data[index]
+      this.form.model = {
+        ...item,
+        title: `Edit ${item.name}`
+      }
+      // this.form.model.title = `Edit ${this.form.model.name}`
+    },
+    onCreate () {
+      this.$refs['form.formValidate'].resetFields()
+      this.form.model = {
+        status: 'ACTIVE',
+        title: 'Add New',
+        isCreate: true
+      }
+      this.showEditModal = true
+    },
+    onSave () {
+      this.modal_loading = true
+      this.$refs['form.formValidate'].validate((valid) => {
+        if (!valid) {
+          this.modal_loading = false
         } else {
-          this.$Message.error('Fail!')
+          this.modal_loading = true
+          axios.request({
+            url: 'services/modules' + (this.form.model.isCreate ? '' : '/' + this.form.model.code),
+            method: this.form.model.isCreate ? 'post' : 'patch',
+            data: {
+              ...this.form.model,
+              create_by: 'sys'
+            }
+          }).then(res => {
+            this.init()
+          }).catch(err => {
+            if (err && err.message) {
+              this.$Message.error(err.message)
+            }
+          }).finally(() => {
+            this.modal_loading = false
+            this.showEditModal = false
+          })
+        }
+      })
+    },
+    onCancel () {
+      // this.$Message.info('Clicked cancel')
+      this.showEditModal = false
+    },
+    onSearch () {
+      console.log(this.search)
+    },
+    onClickDelete (index) {
+      console.log(index)
+      this.$Modal.confirm({
+        title: 'Title',
+        content: '<p>The dialog box will be closed after 2 seconds</p>',
+        loading: true,
+        onOk: () => {
+          setTimeout(() => {
+            this.$Modal.remove()
+            this.$Message.info('Asynchronously close the dialog box')
+          }, 2000)
         }
       })
     }
   },
   watch: {
-    formInline: {
-      handler (val) {
-        console.log('changed!!!')
-      },
-      deep: true
+  },
+  async mounted () {
+    try {
+      this.init()
+    } catch (err) {
+      console.log(err.message)
+      this.$Message.error(err.message)
+      Spin.hide()
+      this.loading = false
     }
   }
 }
 </script>
+<style lang="less">
+  .ivu-table-cell {
+    i {
+      cursor: pointer;
+    }
+    button:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+</style>

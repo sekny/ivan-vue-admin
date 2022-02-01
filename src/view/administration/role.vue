@@ -2,7 +2,9 @@
   <div>
     <Card shadow>
       <p slot="title">Role</p>
-      <Table :columns="table.column" :data="table.data"></Table>
+      Change Loading Status <Switch v-model="loading"></Switch>
+      <Switch v-model="switch1" @on-change="change" />
+      <Table :loading="loading" :columns="table.column" :data="table.data"></Table>
       <!-- <div style="margin: 10px;overflow: hidden">
         <div style="float: right;">
             <Page :total="100" :current="1" @on-change="changePage"></Page>
@@ -18,6 +20,8 @@ export default {
   name: 'role',
   data () {
     return {
+      loading: false,
+      switch1: false,
       table: {
         column: [],
         data: [ ],
@@ -26,6 +30,11 @@ export default {
         total: 12,
         total_pages: 2
       }
+    }
+  },
+  methods: {
+    change (status) {
+      this.$Message.info('Switch' + status)
     }
   },
   async mounted () {

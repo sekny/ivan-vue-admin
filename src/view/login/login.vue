@@ -4,6 +4,7 @@
 
 <template>
   <div class="login">
+    <vue-particles color="#dedede"></vue-particles>
     <div class="login-con">
       <Card icon="log-in" :title="$t('login')" :bordered="false">
         <div class="form-con">
@@ -19,6 +20,9 @@
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
 import { Spin } from 'iview'
+import Vue from 'vue'
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 export default {
   components: {
     LoginForm

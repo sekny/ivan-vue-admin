@@ -1,29 +1,28 @@
 <template>
   <div>
-    <Row :gutter="20" style="margin-top: 10px;">
+    <h3>Hello world</h3>
+    <!-- <Row :gutter="20" style="margin-top: 10px;">
       <i-col :md="24" :lg="24" style="margin-bottom: 20px;">
         <Card shadow>
           <chart-bar style="height: 300px;" :value="barData" text="Weekly user activity"/>
         </Card>
       </i-col>
-    </Row>
+    </Row> -->
   </div>
 </template>
 
 <script>
-import InforCard from '_c/info-card'
-import CountTo from '_c/count-to'
-import { ChartPie, ChartBar } from '_c/charts'
-import Example from './example.vue'
+// import InforCard from '_c/info-card'
+// import { ChartPie, ChartBar } from '_c/charts'
+// import Example from './example.vue'
 export default {
   name: 'home',
-  components: {
-    InforCard,
-    CountTo,
-    ChartPie,
-    ChartBar,
-    Example
-  },
+  // components: {
+  //   InforCard,
+  //   ChartPie,
+  //   ChartBar,
+  //   Example
+  // },
   data () {
     return {
       barData: {

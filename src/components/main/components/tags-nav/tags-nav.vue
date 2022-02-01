@@ -69,8 +69,8 @@ export default {
       contextMenuTop: 0,
       visible: false,
       menuList: {
-        others: '关闭其他',
-        all: '关闭所有'
+        others: 'Close other',
+        all: 'Close all'
       }
     }
   },

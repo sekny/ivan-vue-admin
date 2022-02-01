@@ -21,7 +21,16 @@ class HttpRequest {
     const config = {
       baseURL: this.baseUrl,
       headers: {
-        //
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        addinfo3: 'dfsafsdf',
+        client_id: '136CBC82B5B54239LEEF79BF30803BD7',
+        client_secret: '9f8b5c2789e7484vhfu4udjj484e436c94567acb12ef63e523450b13fdc86baeb04',
+        'x-api-key': '10AB89B75C1A4B36B5F7D1C71F17C7C1'
+        // baseUrl: 'http://10.215.117.196:8080',
+        // clientId: '136CBC82B5B54239LEEF79BF30803BD7',
+        // clientSecret: '9f8b5c2789e7484vhfu4udjj484e436c94567acb12ef63e523450b13fdc86baeb04',
+        // apiKey: '10AB89B75C1A4B36B5F7D1C71F17C7C1'
       }
     }
     return config
@@ -68,6 +77,7 @@ class HttpRequest {
     const instance = axios.create()
     options = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance, options.url)
+    console.log(options)
     return instance(options)
   }
 }

@@ -5,7 +5,7 @@ import store from '@/store'
 import iView from 'iview'
 import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
 import config from '@/config'
-const { homeName } = config
+const { homeName, loadingConfig } = config
 
 Vue.use(Router)
 const router = new Router({
@@ -14,33 +14,35 @@ const router = new Router({
 })
 const LOGIN_PAGE_NAME = 'login'
 
+iView.LoadingBar.config(loadingConfig)
+
 const turnTo = (to, access, next) => {
-  if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
-  else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
+  if (canTurnTo(to.name, access, routes)) next() // have permission to access
+  else next({ replace: true, name: 'error_401' }) // No permission, redirect to 401 page
 }
 
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   const token = getToken()
   if (!token && to.name !== LOGIN_PAGE_NAME) {
-    // 未登录且要跳转的页面不是登录页
+    // Not logged in and the page to jump to is not the login page
     next({
-      name: LOGIN_PAGE_NAME // 跳转到登录页
+      name: LOGIN_PAGE_NAME // Jump to login page
     })
   } else if (!token && to.name === LOGIN_PAGE_NAME) {
-    // 未登陆且要跳转的页面是登录页
-    next() // 跳转
+    // The page that is not logged in and to jump to is the login page
+    next() // jump
   } else if (token && to.name === LOGIN_PAGE_NAME) {
-    // 已登录且要跳转的页面是登录页
+    // The page you are logged in and you want to jump to is the login page
     next({
-      name: homeName // 跳转到homeName页
+      name: homeName // Jump to homeName page
     })
   } else {
     if (store.state.user.hasGetInfo) {
       turnTo(to, store.state.user.access, next)
     } else {
       store.dispatch('getUserInfo').then(user => {
-        // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+        // Pull the user information, and judge whether there is permission to access by the user permissions and the name of the page to which the jump is made; access must be an array, such as: ['super_admin'] ['super_admin', 'admin']
         turnTo(to, user.access, next)
       }).catch(() => {
         setToken('')

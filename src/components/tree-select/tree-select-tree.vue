@@ -13,11 +13,11 @@
 import Emitter from 'iview/src/mixins/emitter.js'
 
 const arrayEqual = (arr1, arr2) => {
-  // 判断数组的长度
+  // Determine the length of the array
   if (arr1.length !== arr2.length) {
     return false
   } else {
-    // 循环遍历数组的值进行比较
+    // Loop through the values of an array to compare
     for (let i = 0; i < arr1.length; i++) {
       if (arr1[i] !== arr2[i]) {
         return false
