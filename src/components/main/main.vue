@@ -32,6 +32,9 @@
           </Content>
         </Layout>
       </Content>
+      <Footer class="layout-footer-center" style="padding: 10px 20px;">
+        &copy; {{ new Date().getFullYear() }}, made with &#129293; by <a href="https://www.hatthabank.com/" target="_blank">Hattha Bank</a>, All rights reserved.
+      </Footer>
     </Layout>
   </Layout>
 </template>
@@ -187,3 +190,11 @@ export default {
   }
 }
 </script>
+<style lang="less">
+  .content-wrapper {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='200px' width='220px'><text x='0' y='50' fill='gainsboro' font-size='56'>Welcome</text></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+</style>

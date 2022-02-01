@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Hello world</h3>
     <!-- <Row :gutter="20" style="margin-top: 10px;">
       <i-col :md="24" :lg="24" style="margin-bottom: 20px;">
         <Card shadow>

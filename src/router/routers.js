@@ -50,26 +50,26 @@ export default [
       }
     ]
   },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      icon: 'logo-buffer',
-      title: 'components'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'tree_select_page',
-        name: 'tree_select_page',
-        meta: {
-          icon: 'md-arrow-dropdown-circle',
-          title: 'tree drop down selector'
-        },
-        component: () => import('@/view/components/tree-select/index.vue')
-      }
-    ]
-  },
+  // {
+  //   path: '/components',
+  //   name: 'components',
+  //   meta: {
+  //     icon: 'logo-buffer',
+  //     title: 'components'
+  //   },
+  //   component: Main,
+  //   children: [
+  //     {
+  //       path: 'tree_select_page',
+  //       name: 'tree_select_page',
+  //       meta: {
+  //         icon: 'md-arrow-dropdown-circle',
+  //         title: 'tree drop down selector'
+  //       },
+  //       component: () => import('@/view/components/tree-select/index.vue')
+  //     }
+  //   ]
+  // },
   // {
   //   path: '/tools_methods',
   //   name: 'tools_methods',
