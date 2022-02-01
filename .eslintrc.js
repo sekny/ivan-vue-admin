@@ -14,7 +14,7 @@ module.exports = {
     }],
     'no-undef': 'off',
     'camelcase': 'off',
-    "quotes": [4, "single", { "avoidEscape": true }]
+    "quotes": [0, "single", { "avoidEscape": true }]
   },
   parserOptions: {
     parser: 'babel-eslint'

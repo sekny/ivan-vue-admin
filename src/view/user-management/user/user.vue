@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card shadow>
-      <p slot="title">Service Module</p>
+      <p slot="title"> {{ $route.meta.title }} </p>
       <Row>
         <Col :xs="{ span: 24 }" :lg="{ span: 22 }"> </Col>
         <Col :xs="{ span: 24 }" :lg="{ span: 2 }" type="flex" justify="end">
@@ -21,34 +21,59 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       table: {
         column: [
           {
             key: "id",
-            title: "id",
-          },
-          {
-            key: "email",
-            title: "email",
-          },
-          {
-            key: "first_name",
-            title: "first_name",
-          },
-          {
-            key: "last_name",
-            title: "last_name",
+            title: "Id",
+            width: 60
           },
           {
             key: "avatar",
-            title: "avatar",
+            title: "User Info",
+            maxWidth: 200,
+            render: (h, params) => {
+              const row = params.row
+
+              return h('div', [
+                h('Avatar', {
+                  props: {
+                    src: row.avatar
+                  }
+                }),
+                h('span', {}, `${row.first_name} ${row.last_name}`)
+              ])
+            }
           },
           {
-            key: "roles",
-            title: "roles",
+            key: "email",
+            title: "Email",
+            maxWidth: 200
           },
+          // {
+          //   key: "first_name",
+          //   title: "first_name",
+          // },
+          // {
+          //   key: "last_name",
+          //   title: "last_name",
+          // },
+          {
+            key: "roles",
+            title: "Roles",
+            render: (h, params) => {
+              const row = params.row
+              return h('Div', [
+                ...row.roles.map((m) => {
+                  return h('Tag', {
+                    type: 'border'
+                  }, m)
+                })
+              ])
+            }
+          }
         ],
         data: [
           {
@@ -57,7 +82,7 @@ export default {
             first_name: "George",
             last_name: "Bluth",
             avatar: "https://reqres.in/img/faces/1-image.jpg",
-            roles: ["User"],
+            roles: ["User", 'Super Admin']
           },
           {
             id: 2,
@@ -65,7 +90,7 @@ export default {
             first_name: "Janet",
             last_name: "Weaver",
             avatar: "https://reqres.in/img/faces/2-image.jpg",
-            roles: ["User"],
+            roles: ["User", "Kak User"]
           },
           {
             id: 3,
@@ -73,7 +98,7 @@ export default {
             first_name: "Emma",
             last_name: "Wong",
             avatar: "https://reqres.in/img/faces/3-image.jpg",
-            roles: ["User"],
+            roles: ["User"]
           },
           {
             id: 4,
@@ -81,7 +106,7 @@ export default {
             first_name: "Eve",
             last_name: "Holt",
             avatar: "https://reqres.in/img/faces/4-image.jpg",
-            roles: ["User"],
+            roles: ["User"]
           },
           {
             id: 5,
@@ -89,7 +114,7 @@ export default {
             first_name: "Charles",
             last_name: "Morris",
             avatar: "https://reqres.in/img/faces/5-image.jpg",
-            roles: ["User"],
+            roles: ["User"]
           },
           {
             id: 6,
@@ -97,22 +122,28 @@ export default {
             first_name: "Tracey",
             last_name: "Ramos",
             avatar: "https://reqres.in/img/faces/6-image.jpg",
-            roles: ["User"],
-          },
+            roles: ["User"]
+          }
         ],
         page: 1,
         per_page: 50,
         total: 12,
-        total_pages: 2,
-      },
-    };
+        total_pages: 2
+      }
+    }
   },
   methods: {
-    onCreate() {
-      console.log("Hit create");
-    },
-  },
-};
+    onCreate () {
+      this.$Message.info('Click ey!!!')
+      console.log("Hit create")
+    }
+  }
+}
 </script>
 <style lang="less">
+.ivu-table {
+  .ivu-avatar{
+    margin-right: 5px;
+  }
+}
 </style>

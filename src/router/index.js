@@ -14,7 +14,9 @@ const router = new Router({
 })
 const LOGIN_PAGE_NAME = 'login'
 
-iView.LoadingBar.config(loadingConfig)
+iView.LoadingBar.config({
+  ...loadingConfig
+})
 
 const turnTo = (to, access, next) => {
   if (canTurnTo(to.name, access, routes)) next() // have permission to access

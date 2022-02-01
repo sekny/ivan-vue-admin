@@ -16,8 +16,8 @@ export default {
     }
   },
   loadingConfig: {
-    height: 3,
+    height: 5,
     failedColor: '#ed4014',
-    color: '#F99E19;'
+    color: '#F99E19'
   }
 }

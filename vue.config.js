@@ -5,7 +5,7 @@ const resolve = dir => {
 }
 
 const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/'
+  ? '/ivan-vue-admin/'
   : '/'
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
   // sub-path here. For example, if your app is deployed at
   // https://www.foobar.com/my-app/
   // then change this to '/my-app/'
-  baseUrl: BASE_URL,
+  publicPath: BASE_URL,
   // eslint, set to false if not use it
   lintOnSave: true,
   chainWebpack: config => {
